@@ -164,9 +164,9 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 | Team Member | MVP Use Case |
 |-------------|--------------|
 | Yudong Zhang | Manage Pantry Inventory |
-| Xinyi Lu | Find Recipes Based on Available Ingredients |
+| Chong Lyu | Find Recipes Based on Available Ingredients |
 | Yaxuan Yu | Generate a Shopping List |
-| Chong Lyu | Track Ingredient Expiration Dates |
+| Xinyi Lu | Track Ingredient Expiration Dates |
 
 ---
 
@@ -190,7 +190,8 @@ TheMealDB API
 **Documentation:** [Filter by main ingredient
 themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
 Filter meals that include a single ingredient.
-themealdb.com/api/json/v1/1/search.php?s=Arrabiata]
+themealdb.com/api/json/v1/1/search.php?s=Arrabiata
+]
 
 
 **How it is used in the program:**
