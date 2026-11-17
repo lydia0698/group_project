@@ -37,7 +37,7 @@ As a user, I want to search for recipes based on the ingredients I already have,
 
 ### User Story 3: Generate a Shopping List
 
-As a user, I want to automatically generate a shopping list based on the ingredients missing from my planned meals, so that I can buy only what I need.
+As a user, I want to see which ingredients for my selected recipe are missing from my pantry, so that I know what to look for when I shop.
 
 ### User Story 4: Track Ingredient Expiration Dates
 
@@ -110,25 +110,26 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 |---|---|
 | **Name** | Generate a Shopping List |
 | **Primary Actor** | User |
-| **Preconditions** | The application is running, and at least one recipe has been selected for a planned meal. |
-| **Trigger** | The user requests a shopping list. |
-| **Success Outcome** | A shopping list containing missing ingredients and required quantities is generated and displayed. |
+| **Preconditions** | The application is running, and the user has selected a recipe. |
+| **Trigger** | The user requests to view missing ingredients for the selected recipe. |
+| **Success Outcome** | The system displays a list of ingredients required by the selected recipe that are missing from the user's pantry. |
 
 **Main Success Scenario**
 
-1. The user opens the shopping list interface.
-2. The system displays the selected recipes.
-3. The user requests a shopping list.
-4. The system retrieves the required ingredients and quantities.
-5. The system compares them with the current pantry inventory.
-6. The system identifies missing or insufficient ingredients.
-7. The system generates a shopping list.
-8. The system displays the shopping list.
+1. The user selects a recipe.
+2. The user requests to view the missing ingredients.
+3. The system retrieves the required ingredients for the selected recipe from the external recipe API or previously retrieved recipe data.
+4. The system retrieves the current pantry inventory.
+5. The system compares the required ingredients with the available pantry ingredients.
+6. The system identifies the ingredients missing from the pantry.
+7. The system displays the list of missing ingredients.
 
 **Extensions**
 
-- **4a.** Recipe ingredient information is unavailable → The system informs the user that the shopping list cannot be fully generated.
-- **6a.** All required ingredients are available → The system displays an empty shopping list and informs the user that no additional ingredients are needed.
+- **3a.** The API is unavailable and recipe information is not already stored → The system displays an error message.
+- **3b.** Recipe ingredient information is unavailable → The system informs the user that missing ingredients cannot be identified.
+- **4a.** The pantry is empty → The system identifies all required ingredients as missing.
+- **6a.** All required ingredients are available → The system informs the user that no ingredients are missing.
 
 ---
 
