@@ -162,10 +162,10 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 
 | Team Member | MVP Use Case |
 |-------------|--------------|
-| [Member 1] | Manage Pantry Inventory |
-| [Member 2] | Find Recipes Based on Available Ingredients |
-| [Member 3] | Generate a Shopping List |
-| [Member 4] | Track Ingredient Expiration Dates |
+| Yudong Zhang | Manage Pantry Inventory |
+| Xinyi Lu | Find Recipes Based on Available Ingredients |
+| Yaxuan Yu | Generate a Shopping List |
+| Chong Lyu | Track Ingredient Expiration Dates |
 
 ---
 
@@ -175,7 +175,9 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 
 ### Entity 2
 
-(Add additional entities as needed.)
+### Entity 3
+
+### Entity 4
 
 ---
 
