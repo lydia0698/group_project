@@ -199,7 +199,7 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 ---
 
 ## How to Run
-## How to Run the App
+**How to Run the App**
 1. Install Java JDK 17 or later and IntelliJ IDEA.
  2. Clone the project repository from GitHub using 
     `git clone <repository-url>`.
@@ -207,12 +207,12 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
  4. Ensure the correct Java SDK (JDK 17 or later) is selected in **Project Structure**.
  5. Locate the main class (e.g., `Main.java`) and click **Run** to launch the refrigerator app.
  
-## Prerequisites
+**Prerequisites**
 - Java JDK 17 or later
  - IntelliJ IDEA (Community or Ultimate Edition)
  - Git installed to clone the repository
  
-## Getting Started
+**Getting Started**
 1. Make sure you have all the prerequisites installed (see **Prerequisites** above).
  2. Clone the repository using `git clone <repository-url>`.
  3. Open the project in IntelliJ IDEA.
