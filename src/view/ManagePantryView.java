@@ -8,7 +8,6 @@ import interface_adapter.manage_pantry.ManagePantryViewModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -34,7 +33,7 @@ public class ManagePantryView extends JPanel {
         add(title, BorderLayout.NORTH);
 
         String[] columns = {
-                "ID", "Ingredient", "Quantity", "Unit", "Expiration Date"
+                "ID", "Ingredient", "Quantity", "Expiration Date"
         };
 
         tableModel = new DefaultTableModel(columns, 0) {
@@ -45,6 +44,10 @@ public class ManagePantryView extends JPanel {
         };
 
         table = new JTable(tableModel);
+
+        // Keep ID in the table model, but hide it from the UI.
+        table.removeColumn(table.getColumnModel().getColumn(0));
+
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(new JScrollPane(table), BorderLayout.CENTER);
 
@@ -95,6 +98,21 @@ public class ManagePantryView extends JPanel {
         controller.listItems();
     }
 
+    private String formatQuantity(PantryItem item) {
+
+        String quantity = item.getQuantity()
+                .stripTrailingZeros()
+                .toPlainString();
+
+        String unit = item.getUnit();
+
+        if ("pcs".equalsIgnoreCase(unit)) {
+            return quantity;
+        }
+
+        return quantity + unit;
+    }
+
     private void refreshTable() {
         tableModel.setRowCount(0);
 
@@ -102,8 +120,7 @@ public class ManagePantryView extends JPanel {
             tableModel.addRow(new Object[]{
                     item.getId(),
                     item.getName(),
-                    item.getQuantity(),
-                    item.getUnit(),
+                    formatQuantity(item),
                     item.getExpirationDate()
             });
         }
@@ -163,33 +180,28 @@ public class ManagePantryView extends JPanel {
     }
 
     private void showItemDialog(PantryItem existingItem) {
+
         boolean editing = existingItem != null;
 
-        JTextField idField = new JTextField(
-                editing ? existingItem.getId() : "");
         JTextField nameField = new JTextField(
                 editing ? existingItem.getName() : "");
+
         JTextField quantityField = new JTextField(
-                editing ? existingItem.getQuantity().toString() : "");
-        JTextField unitField = new JTextField(
-                editing ? existingItem.getUnit() : "");
+                editing ? formatQuantity(existingItem) : "");
+
         JTextField expirationField = new JTextField(
                 editing && existingItem.getExpirationDate() != null
                         ? existingItem.getExpirationDate().toString()
                         : "");
 
-        idField.setEditable(!editing);
+        JPanel panel = new JPanel(new GridLayout(3, 2, 5, 5));
 
-        JPanel panel = new JPanel(new GridLayout(5, 2, 5, 5));
-
-        panel.add(new JLabel("ID:"));
-        panel.add(idField);
         panel.add(new JLabel("Ingredient:"));
         panel.add(nameField);
-        panel.add(new JLabel("Quantity:"));
+
+        panel.add(new JLabel("Quantity (e.g. 500ml, 200g, 3):"));
         panel.add(quantityField);
-        panel.add(new JLabel("Unit:"));
-        panel.add(unitField);
+
         panel.add(new JLabel("Expiration (yyyy-MM-dd):"));
         panel.add(expirationField);
 
@@ -205,31 +217,43 @@ public class ManagePantryView extends JPanel {
         }
 
         try {
-            String id = idField.getText().trim();
             String name = nameField.getText().trim();
-            BigDecimal quantity = new BigDecimal(
-                    quantityField.getText().trim());
-            String unit = unitField.getText().trim();
+            String quantityText = quantityField.getText().trim();
 
             String dateText = expirationField.getText().trim();
+
             LocalDate expirationDate = dateText.isEmpty()
                     ? null
                     : LocalDate.parse(dateText);
 
             if (editing) {
                 controller.updateItem(
-                        id, name, quantity, unit, expirationDate);
+                        existingItem.getId(),
+                        name,
+                        quantityText,
+                        expirationDate
+                );
             } else {
                 controller.addItem(
-                        id, name, quantity, unit, expirationDate);
+                        name,
+                        quantityText,
+                        expirationDate
+                );
             }
 
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(
-                    this, "Please enter a valid quantity.");
         } catch (DateTimeParseException ex) {
             JOptionPane.showMessageDialog(
-                    this, "Date must use yyyy-MM-dd format.");
+                    this,
+                    "Date must use yyyy-MM-dd format.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }
