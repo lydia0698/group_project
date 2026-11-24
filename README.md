@@ -186,20 +186,27 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 
 **API Name:**
 TheMealDB API
+USDA FoodKeeper
 
-**Documentation:** [Filter by main ingredient
+**Documentation:** 
+### Filter by main ingredient
 themealdb.com/api/json/v1/1/filter.php?i=chicken_breast
-Filter meals that include a single ingredient.
+### Filter meals that include a single ingredient.
 themealdb.com/api/json/v1/1/search.php?s=Arrabiata
-]
+### Find expiration date:
+https://www.fsis.usda.gov/shared/data/EN/foodkeeper.json
 
 
 **How it is used in the program:**
-Filter by Main Ingredient:
+### Filter by Main Ingredient:
 The system sends a selected pantry ingredient to the API and retrieves a list of matching recipes. The results are displayed to the user, allowing them to decide what to cook based on their available ingredients.
 
-Search Meal by Name:
+### Search Meal by Name:
 When the user selects a recipe, the system retrieves detailed recipe information, including required ingredients, measurements, and cooking instructions. The system displays the recipe details and compares the required ingredients with the current pantry inventory to automatically generate a shopping list of missing or insufficient ingredients.
+
+### Find expiration date:
+The system retrieves estimated shelf-life information for different food items, including fruits and vegetables, based on their types and storage conditions. It uses this information along with the user's recorded purchase dates to calculate estimated expiration dates.
+The system then compares these dates with the current date and displays ingredients that are expired or close to expiring, helping users reduce food waste.
 
 ---
 
