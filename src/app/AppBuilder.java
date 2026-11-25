@@ -9,6 +9,11 @@ import use_case.manage_pantry.ManagePantryInteractor;
 import use_case.pantry.PantryRepository;
 import view.MainFrame;
 import view.ManagePantryView;
+import interface_adapter.track_expiration.TrackExpirationController;
+import interface_adapter.track_expiration.TrackExpirationPresenter;
+import interface_adapter.track_expiration.TrackExpirationViewModel;
+import use_case.track_expiration.TrackExpirationInteractor;
+import view.TrackExpirationView;
 
 public class AppBuilder {
 
@@ -39,6 +44,37 @@ public class AppBuilder {
                 new ManagePantryView(controller, viewModel);
 
         // 7. Create the main window
-        return new MainFrame(pantryView);
+
+        // Create expiration ViewModel
+        TrackExpirationViewModel expirationViewModel =
+                new TrackExpirationViewModel();
+
+// Create expiration Presenter
+        TrackExpirationPresenter expirationPresenter =
+                new TrackExpirationPresenter(expirationViewModel);
+
+// Create expiration Interactor
+        TrackExpirationInteractor expirationInteractor =
+                new TrackExpirationInteractor(
+                        repository,
+                        expirationPresenter
+                );
+
+// Create expiration Controller
+        TrackExpirationController expirationController =
+                new TrackExpirationController(expirationInteractor);
+
+// Create expiration View
+        TrackExpirationView expirationView =
+                new TrackExpirationView(
+                        expirationController,
+                        expirationViewModel
+                );
+
+// Add expiration tab to the main window
+        MainFrame mainFrame = new MainFrame(pantryView);
+        mainFrame.addExpirationTab(expirationView);
+
+        return mainFrame;
     }
 }
