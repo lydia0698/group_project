@@ -11,6 +11,10 @@ import interface_adapter.manage_pantry.ManagePantryController;
 import interface_adapter.manage_pantry.ManagePantryPresenter;
 import interface_adapter.manage_pantry.ManagePantryViewModel;
 
+import interface_adapter.search_shopping_recipes.SearchShoppingRecipesController;
+import interface_adapter.search_shopping_recipes.SearchShoppingRecipesPresenter;
+import interface_adapter.search_shopping_recipes.SearchShoppingRecipesViewModel;
+
 import interface_adapter.track_expiration.TrackExpirationController;
 import interface_adapter.track_expiration.TrackExpirationPresenter;
 import interface_adapter.track_expiration.TrackExpirationViewModel;
@@ -18,16 +22,13 @@ import interface_adapter.track_expiration.TrackExpirationViewModel;
 import use_case.generate_shopping_list.GenerateShoppingListInteractor;
 import use_case.manage_pantry.ManagePantryInteractor;
 import use_case.pantry.PantryRepository;
-import use_case.recipe.RecipeGateway;
+import use_case.search_shopping_recipes.SearchShoppingRecipesInteractor;
 import use_case.track_expiration.TrackExpirationInteractor;
 
 import view.MainFrame;
 import view.ManagePantryView;
 import view.ShoppingListView;
 import view.TrackExpirationView;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class AppBuilder {
 
@@ -59,7 +60,7 @@ public class AppBuilder {
         GenerateShoppingListPresenter shoppingPresenter =
                 new GenerateShoppingListPresenter(shoppingViewModel);
 
-        RecipeGateway recipeGateway = new TheMealDbGateway();
+        TheMealDbGateway recipeGateway = new TheMealDbGateway();
 
         GenerateShoppingListInteractor shoppingInteractor =
                 new GenerateShoppingListInteractor(
@@ -74,16 +75,30 @@ public class AppBuilder {
                         shoppingViewModel
                 );
 
-        Map<String, String> recipeOptions = new LinkedHashMap<>();
-        recipeOptions.put("53016", "Chick-Fil-A Sandwich");
-        recipeOptions.put("52772", "Teriyaki Chicken Casserole");
+        // UC3: Search Recipes by Name
+        SearchShoppingRecipesViewModel searchViewModel =
+                new SearchShoppingRecipesViewModel();
+
+        SearchShoppingRecipesPresenter searchPresenter =
+                new SearchShoppingRecipesPresenter(
+                        searchViewModel);
+
+        SearchShoppingRecipesInteractor searchInteractor =
+                new SearchShoppingRecipesInteractor(
+                        recipeGateway,
+                        searchPresenter);
+
+        SearchShoppingRecipesController searchController =
+                new SearchShoppingRecipesController(
+                        searchInteractor,
+                        searchViewModel);
 
         ShoppingListView shoppingView =
                 new ShoppingListView(
                         shoppingController,
                         shoppingViewModel,
-                        recipeOptions
-                );
+                        searchController,
+                        searchViewModel);
 
         // UC4: Track Expiration Dates
         TrackExpirationViewModel expirationViewModel =
