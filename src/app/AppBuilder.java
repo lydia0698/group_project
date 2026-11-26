@@ -33,21 +33,24 @@ public class AppBuilder {
 
     public static MainFrame build() {
 
-        // Create shared pantry repository
+        // Shared pantry repository
         PantryRepository repository = new InMemoryPantryRepository();
 
         // UC1: Manage Pantry
-        ManagePantryViewModel viewModel = new ManagePantryViewModel();
-        ManagePantryPresenter presenter = new ManagePantryPresenter(viewModel);
+        ManagePantryViewModel pantryViewModel =
+                new ManagePantryViewModel();
 
-        ManagePantryInteractor interactor =
-                new ManagePantryInteractor(repository, presenter);
+        ManagePantryPresenter pantryPresenter =
+                new ManagePantryPresenter(pantryViewModel);
 
-        ManagePantryController controller =
-                new ManagePantryController(interactor);
+        ManagePantryInteractor pantryInteractor =
+                new ManagePantryInteractor(repository, pantryPresenter);
+
+        ManagePantryController pantryController =
+                new ManagePantryController(pantryInteractor);
 
         ManagePantryView pantryView =
-                new ManagePantryView(controller, viewModel);
+                new ManagePantryView(pantryController, pantryViewModel);
 
         // UC3: Generate Shopping List
         GenerateShoppingListViewModel shoppingViewModel =
@@ -60,20 +63,27 @@ public class AppBuilder {
 
         GenerateShoppingListInteractor shoppingInteractor =
                 new GenerateShoppingListInteractor(
-                        repository, recipeGateway, shoppingPresenter);
+                        repository,
+                        recipeGateway,
+                        shoppingPresenter
+                );
 
         GenerateShoppingListController shoppingController =
                 new GenerateShoppingListController(
-                        shoppingInteractor, shoppingViewModel);
+                        shoppingInteractor,
+                        shoppingViewModel
+                );
 
-        // Example recipes while UC2 integration is pending
         Map<String, String> recipeOptions = new LinkedHashMap<>();
         recipeOptions.put("53016", "Chick-Fil-A Sandwich");
         recipeOptions.put("52772", "Teriyaki Chicken Casserole");
 
         ShoppingListView shoppingView =
                 new ShoppingListView(
-                        shoppingController, shoppingViewModel, recipeOptions);
+                        shoppingController,
+                        shoppingViewModel,
+                        recipeOptions
+                );
 
         // UC4: Track Expiration Dates
         TrackExpirationViewModel expirationViewModel =
@@ -84,19 +94,22 @@ public class AppBuilder {
 
         TrackExpirationInteractor expirationInteractor =
                 new TrackExpirationInteractor(
-                        repository, expirationPresenter);
+                        repository,
+                        expirationPresenter
+                );
 
         TrackExpirationController expirationController =
                 new TrackExpirationController(expirationInteractor);
 
         TrackExpirationView expirationView =
                 new TrackExpirationView(
-                        expirationController, expirationViewModel);
+                        expirationController,
+                        expirationViewModel
+                );
 
-        // Create MainFrame
+        // Build main window
         MainFrame mainFrame = new MainFrame(pantryView);
 
-        // Add both tabs
         mainFrame.addShoppingListTab(shoppingView);
         mainFrame.addExpirationTab(expirationView);
 
