@@ -50,7 +50,7 @@ public class ShoppingListView extends JPanel{
         listModel = new DefaultListModel<>();
         JList<String> ingredientList = new JList<>(listModel);
 
-        resultLabel = new JLabel("Missing ingredients");
+        resultLabel = new JLabel("Shopping list");
 
         JPanel resultPanel = new JPanel(new BorderLayout(0, 8));
         resultPanel.add(resultLabel, BorderLayout.NORTH);
@@ -137,10 +137,10 @@ public class ShoppingListView extends JPanel{
         String recipeName = viewModel.getRecipeName();
 
         if (recipeName.isEmpty()) {
-            resultLabel.setText("Missing ingredients");
+            resultLabel.setText("Shopping list");
         } else {
             resultLabel.setText(
-                    "Missing ingredients for " + recipeName);
+                    "Shopping list for " + recipeName);
         }
 
         if (viewModel.getErrorMessage().isEmpty()) {
