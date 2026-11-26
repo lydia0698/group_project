@@ -29,7 +29,7 @@ The goal of Smart Kitchen Assistant is to make everyday cooking and grocery shop
 
 ### User Story 1: Manage Pantry Inventory
 
-As a user, I want to add, edit, and remove ingredients from my pantry, including their quantities and expiration dates, so that I can keep track of what food I have at home.
+As a user, I want to add, edit, and remove ingredients from my pantry, so that I can keep track of what food I have at home.
 
 ### User Story 2: Find Recipes Based on Available Ingredients
 
@@ -135,27 +135,30 @@ As a user, I want to see which ingredients are close to expiring, so that I can 
 
 ### Use Case 4: Track Ingredient Expiration Dates
 
-| Field | Description |
+| **Field** | **Description** |
 |---|---|
 | **Name** | Track Ingredient Expiration Dates |
 | **Primary Actor** | User |
-| **Preconditions** | The application is running, and the pantry contains ingredients with recorded expiration dates. |
+| **Supporting Actor** | Food Shelf-Life Data Source |
+| **Preconditions** | The application is running, and the pantry contains ingredients with recorded purchase dates and storage conditions. |
 | **Trigger** | The user opens the expiration tracking interface. |
-| **Success Outcome** | Ingredients are displayed with their expiration status, highlighting those that are expired or close to expiring. |
+| **Success Outcome** | The system displays ingredients with estimated expiration dates and highlights those that may be close to expiring. |
 
 **Main Success Scenario**
 
 1. The user opens the expiration tracking interface.
-2. The system retrieves the ingredients and expiration dates.
-3. The system compares the expiration dates with the current date.
-4. The system identifies expired or nearly expired ingredients.
-5. The system displays the ingredients with their expiration status.
-6. The user reviews the expiration information.
+2. The system retrieves the pantry ingredients, purchase dates, and storage conditions.
+3. The system retrieves estimated shelf-life information for the ingredients from the food shelf-life data source.
+4. The system calculates estimated expiration dates based on the purchase dates and shelf-life information.
+5. The system compares the estimated expiration dates with the current date.
+6. The system identifies ingredients that may be expired or close to expiring.
+7. The system displays the ingredients with their estimated expiration status.
 
 **Extensions**
 
-- **2a.** No expiration information is available → The system informs the user.
-- **4a.** No ingredients are expired or close to expiring → The system displays a message indicating that there are no expiration warnings.
+- **3a.** Shelf-life information is unavailable → The system informs the user that an estimated expiration date cannot be calculated.
+- **3b.** An ingredient is not found in the data source → The system allows the user to enter an expiration date manually.
+- **6a.** No ingredients are close to expiring → The system displays a message indicating that there are no expiration warnings.
 
 ---
 

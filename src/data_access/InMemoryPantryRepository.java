@@ -14,22 +14,22 @@ public class InMemoryPantryRepository implements PantryRepository {
     private final Map<String, PantryItem> items = new HashMap<>();
 
     @Override
-    public List<PantryItem> findAll() {
+    public synchronized List<PantryItem> findAll() {
         return new ArrayList<>(items.values());
     }
 
     @Override
-    public PantryItem findById(String id) {
+    public synchronized PantryItem findById(String id) {
         return items.get(id);
     }
 
     @Override
-    public void save(PantryItem item) {
+    public synchronized void save(PantryItem item) {
         items.put(item.getId(), item);
     }
 
     @Override
-    public void deleteById(String id) {
+    public synchronized void deleteById(String id) {
         items.remove(id);
     }
 }
