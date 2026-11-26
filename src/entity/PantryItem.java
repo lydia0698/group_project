@@ -10,6 +10,10 @@ public class PantryItem {
     private BigDecimal quantity;
     private String unit;
     private LocalDate expirationDate;
+    private StorageCondition storageCondition;
+    private LocalDate storageStartDate;
+    private LocalDate purchaseDate;
+
 
     public PantryItem(String id, String name,
                       BigDecimal quantity, String unit,
@@ -22,6 +26,21 @@ public class PantryItem {
         setQuantity(quantity);
         setUnit(unit);
         setExpirationDate(expirationDate);
+    }
+
+    public PantryItem(
+            String id,
+            String name,
+            BigDecimal quantity,
+            String unit,
+            LocalDate expirationDate,
+            StorageCondition storageCondition,
+            LocalDate storageStartDate) {
+
+        this(id, name, quantity, unit, expirationDate);
+
+        this.storageCondition = storageCondition;
+        this.storageStartDate = storageStartDate;
     }
 
     public String getId() {
@@ -70,4 +89,29 @@ public class PantryItem {
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    public StorageCondition getStorageCondition() {
+        return storageCondition;
+    }
+
+    public void setStorageCondition(StorageCondition storageCondition) {
+        this.storageCondition = storageCondition;
+    }
+
+    public LocalDate getStorageStartDate() {
+        return storageStartDate;
+    }
+
+    public void setStorageStartDate(LocalDate storageStartDate) {
+        this.storageStartDate = storageStartDate;
+    }
+
+    public LocalDate getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDate purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
 }

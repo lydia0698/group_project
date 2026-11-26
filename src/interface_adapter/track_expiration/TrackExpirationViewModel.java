@@ -1,53 +1,52 @@
 package interface_adapter.track_expiration;
 
-import entity.PantryItem;
+import use_case.track_expiration.ExpirationResult;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrackExpirationViewModel {
+    private List<ExpirationResult> results =
+            new ArrayList<>();
 
-    private List<PantryItem> expiredItems = new ArrayList<>();
-    private List<PantryItem> expiringSoonItems = new ArrayList<>();
     private String errorMessage = "";
 
     private final PropertyChangeSupport support =
             new PropertyChangeSupport(this);
 
-    public List<PantryItem> getExpiredItems() {
-        return List.copyOf(expiredItems);
-    }
-
-    public List<PantryItem> getExpiringSoonItems() {
-        return List.copyOf(expiringSoonItems);
+    public List<ExpirationResult> getResults() {
+        return new ArrayList<>(results);
     }
 
     public String getErrorMessage() {
         return errorMessage;
     }
 
-    public void setExpiredItems(List<PantryItem> items) {
-        this.expiredItems = new ArrayList<>(items);
-        support.firePropertyChange(
-                "expiredItems", null, this.expiredItems);
-    }
+    public void setResults(List<ExpirationResult> results) {
+        this.results = new ArrayList<>(results);
 
-    public void setExpiringSoonItems(List<PantryItem> items) {
-        this.expiringSoonItems = new ArrayList<>(items);
         support.firePropertyChange(
-                "expiringSoonItems", null, this.expiringSoonItems);
+                "results",
+                null,
+                this.results
+        );
     }
 
     public void setErrorMessage(String message) {
         this.errorMessage = message;
+
         support.firePropertyChange(
-                "errorMessage", null, message);
+                "errorMessage",
+                null,
+                message
+        );
     }
 
     public void addPropertyChangeListener(
             PropertyChangeListener listener) {
+
         support.addPropertyChangeListener(listener);
     }
-
 }
