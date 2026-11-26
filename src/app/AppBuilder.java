@@ -1,4 +1,3 @@
-
 package app;
 
 import data_access.InMemoryPantryRepository;
