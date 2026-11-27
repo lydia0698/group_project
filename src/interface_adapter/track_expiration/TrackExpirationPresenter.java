@@ -4,6 +4,7 @@ import use_case.track_expiration.TrackExpirationOutputBoundary;
 import use_case.track_expiration.TrackExpirationOutputData;
 
 public class TrackExpirationPresenter implements TrackExpirationOutputBoundary{
+
     private final TrackExpirationViewModel viewModel;
 
     public TrackExpirationPresenter(
@@ -15,12 +16,7 @@ public class TrackExpirationPresenter implements TrackExpirationOutputBoundary{
     public void presentExpirationResults(
             TrackExpirationOutputData outputData) {
 
-        viewModel.setExpiredItems(
-                outputData.getExpiredItems());
-
-        viewModel.setExpiringSoonItems(
-                outputData.getExpiringSoonItems());
-
+        viewModel.setResults(outputData.getResults());
         viewModel.setErrorMessage("");
     }
 

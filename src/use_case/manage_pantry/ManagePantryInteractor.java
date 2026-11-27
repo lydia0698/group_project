@@ -61,6 +61,15 @@ public class ManagePantryInteractor implements ManagePantryInputBoundary {
                     inputData.getExpirationDate()
             );
 
+            updated.setStorageCondition(
+                    existing.getStorageCondition());
+
+            updated.setStorageStartDate(
+                    existing.getStorageStartDate());
+
+            updated.setPurchaseDate(
+                    existing.getPurchaseDate());
+
             repository.save(updated);
             presentInventory("Item updated successfully");
 

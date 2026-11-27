@@ -1,25 +1,20 @@
 package use_case.track_expiration;
 
-import entity.PantryItem;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TrackExpirationOutputData {
-    private final List<PantryItem> expiredItems;
-    private final List<PantryItem> expiringSoonItems;
+    private final List<ExpirationResult> results;
 
     public TrackExpirationOutputData(
-            List<PantryItem> expiredItems,
-            List<PantryItem> expiringSoonItems) {
+            List<ExpirationResult> results) {
 
-        this.expiredItems = expiredItems;
-        this.expiringSoonItems = expiringSoonItems;
+        this.results = Collections.unmodifiableList(
+                new ArrayList<>(results));
     }
 
-    public List<PantryItem> getExpiredItems() {
-        return expiredItems;
-    }
-
-    public List<PantryItem> getExpiringSoonItems() {
-        return expiringSoonItems;
+    public List<ExpirationResult> getResults() {
+        return results;
     }
 }
