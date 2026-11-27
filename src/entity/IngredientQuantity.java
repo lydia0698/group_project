@@ -47,15 +47,17 @@ public class IngredientQuantity {
             case "cup", "cups" ->
                     normalizedUnit = "cup";
 
-            case "tbsp", "tbs", "tablespoon", "tablespoons" ->
-                    normalizedUnit = "tbsp";
+            case "tbsp", "tbs", "tablespoon", "tablespoons" -> {
+                normalizedAmount =
+                        amount.multiply(BigDecimal.valueOf(3));
+                normalizedUnit = "tsp";
+            }
 
             case "tsp", "teaspoon", "teaspoons" ->
                     normalizedUnit = "tsp";
 
-            default -> {
-                // Preserve units that are not converted.
-            }
+            default -> throw new IllegalArgumentException(
+                    "Unsupported unit: " + unit);
         }
 
         this.amount = normalizedAmount;

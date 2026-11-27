@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.math.MathContext;
 
 public class RecipeAmountParser {
     private static final Set<String> SUPPORTED_UNITS =
@@ -53,7 +54,7 @@ public class RecipeAmountParser {
             }
 
             return Optional.of(quantity);
-        } catch (NumberFormatException | ArithmeticException exception) {
+        } catch (IllegalArgumentException | ArithmeticException exception) {
             return Optional.empty();
         }
     }
@@ -69,7 +70,8 @@ public class RecipeAmountParser {
             BigDecimal denominator = new BigDecimal(fraction[1]);
 
             // Avoid rounding quantities when the fraction is not exact.
-            amount = numerator.divide(denominator);
+            amount = numerator.divide(
+                    denominator, MathContext.DECIMAL128);
         } else {
             amount = new BigDecimal(number);
         }

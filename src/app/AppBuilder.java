@@ -2,6 +2,8 @@ package app;
 
 import data_access.InMemoryPantryRepository;
 import data_access.TheMealDbGateway;
+import data_access.FoodKeeperDataAccessObject;
+import use_case.track_expiration.ShelfLifeDataAccessInterface;
 
 import interface_adapter.generate_shopping_list.GenerateShoppingListController;
 import interface_adapter.generate_shopping_list.GenerateShoppingListPresenter;
@@ -107,10 +109,16 @@ public class AppBuilder {
         TrackExpirationPresenter expirationPresenter =
                 new TrackExpirationPresenter(expirationViewModel);
 
+        // Create FoodKeeper data access
+        ShelfLifeDataAccessInterface shelfLifeDataAccess =
+                new FoodKeeperDataAccessObject();
+
+        // Create interactor with three arguments
         TrackExpirationInteractor expirationInteractor =
                 new TrackExpirationInteractor(
                         repository,
-                        expirationPresenter
+                        expirationPresenter,
+                        shelfLifeDataAccess
                 );
 
         TrackExpirationController expirationController =
