@@ -223,27 +223,32 @@ The system then compares these dates with the current date and displays ingredie
 ---
 
 ## How to Run
-**How to Run the App**
-1. Install Java JDK 17 or later and IntelliJ IDEA.
- 2. Clone the project repository from GitHub using 
-    `git clone <repository-url>`.
- 3. Open the cloned project folder in IntelliJ IDEA.
- 4. Ensure the correct Java SDK (JDK 17 or later) is selected in **Project Structure**.
- 5. Locate the main class (e.g., `Main.java`) and click **Run** to launch the refrigerator app.
- 
-**Prerequisites**
-- Java JDK 17 or later
- - IntelliJ IDEA (Community or Ultimate Edition)
- - Git installed to clone the repository
- 
-**Getting Started**
-1. Make sure you have all the prerequisites installed (see **Prerequisites** above).
- 2. Clone the repository using `git clone <repository-url>`.
- 3. Open the project in IntelliJ IDEA.
- 4. Configure the project to use Java JDK 17 or later.
- 5. Run the main class (e.g., `Main.java`) to start the refrigerator app.
 
+### Prerequisites
+- Java JDK 27
+- IntelliJ IDEA (Community or Ultimate Edition)
+- Git
+- Internet connection for accessing TheMealDB API
 
+### Getting Started
+1. Make sure Java JDK 27, IntelliJ IDEA, and Git are installed.
+2. Clone the repository using:
+   ```bash
+   git clone https://github.com/lydia0698/group_project.git
+   ```
+3. Open the cloned `group_project` folder in IntelliJ IDEA.
+4. Go to **File → Project Structure → Project**.
+   - Set **Project SDK** to JDK 27.
+   - Set **Language level** to 27 or SDK default.
+5. Under **Project Structure → Modules → Dependencies**, ensure the Module SDK is set to the Project SDK.
+6. Ensure that `lib/json-20260814.jar` is added to the project's dependencies.
+7. Make sure `resources/foodkeeper.json` is present in the project.
+8. Open `src/app/Main.java` and click **Run** to launch the Smart Kitchen Assistant.
+
+### Notes
+- The application uses TheMealDB API to retrieve recipes, so an internet connection is required for recipe-related features.
+- FoodKeeper data is stored locally in `resources/foodkeeper.json`.
+- Pantry inventory is stored in memory and will reset when the application is restarted.
 
 ---
 
